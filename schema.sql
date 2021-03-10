@@ -7,38 +7,43 @@ USE employee_tracker_db;
 -- Department table
 CREATE TABLE department (
 -- Department id
-id int not null auto_increment,
+id int auto_increment PRIMARY KEY,
 -- Department name
-name varchar(50),
+name varchar(30)
 
-primary key(id)
 );
 
 -- Role table
 CREATE TABLE role (
-id int not null auto_increment,
-title varchar(50) not null,
+id int not null auto_increment PRIMARY KEY,
+title varchar(30) not null,
 salary decimal,
 department_id int,
 
-primary key(id),
 FOREIGN KEY (department_id) REFERENCES department(id)
 );
 
 -- Employee table
 CREATE TABLE employee (
-id int not null auto_increment,
-first_name varchar(50) not null,
-last_name varchar(50) not null,
+id int not null auto_increment PRIMARY KEY,
+first_name varchar(30) not null,
+last_name varchar(30) not null,
 role_id int not null,
 manager_id int,
 
-primary key(id)
+FOREIGN KEY (role_id) REFERENCES role(id),
+FOREIGN KEY (manager_id) REFERENCES employee(id)
 
 );
 
 Insert into department (name)
 Values ("Echo"), ("EKG"), ("Holter");
 
+Insert into role (title, salary, department_id)
+Value ("Sonographer", 70000, 1);
+
 select * from department;
+select * from role;
+
+
 

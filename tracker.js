@@ -34,7 +34,7 @@ function askFirstQuestion() {
       },
     ])
     .then((answers) => {
-      console.log(answers);
+      //console.log(answers);
       const { task } = answers;
       if (task === "VIEW departments") {
         viewDepartments();
@@ -56,10 +56,24 @@ function askFirstQuestion() {
       }
     });
 }
-
+// View departments
 function viewDepartments() {
   connection.query("select * from department", (err, results) => {
     if(err) console.error(err);
-    console.log("Should display departments")
+    //console.log(results);
+    console.table(results);
+    console.log("See results above")
+    askFirstQuestion();
   });
 }
+
+// View roles
+function viewRoles() {
+  console.log("roles friend")
+}
+
+// View Employees
+function viewEmployees() {
+  console.log("employees here")
+}
+
