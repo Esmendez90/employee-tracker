@@ -63,7 +63,10 @@ function askFirstQuestion() {
 }
 // View departments
 function viewDepartments() {
-  connection.query("select * from department", (err, results) => {
+  let departments =
+    "Select department.id, department.name, employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.id, role.title, role.salary, role.department_id FROM department JOIN role ON department.id = role.department_id JOIN employee ON role.id = employee.role_id";
+
+  connection.query(departments, (err, results) => {
     if (err) console.error(err);
     //console.log(results);
     console.table(results);
@@ -74,7 +77,8 @@ function viewDepartments() {
 
 // View roles
 function viewRoles() {
-  connection.query("select * from role", (err, results) => {
+  let roles = "Select role.id, role.title, role.salary, role.department_id, employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, department.id, department.name FROM department JOIN role ON department.id = role.department_id JOIN employee ON role.id = employee.role_id";
+  connection.query(roles, (err, results) => {
     if (err) console.error(err);
     //console.log(results);
     console.table(results);
