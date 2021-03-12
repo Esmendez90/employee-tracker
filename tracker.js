@@ -65,7 +65,6 @@ function askFirstQuestion() {
 function viewDepartments() {
   let departments =
     "Select department.id, department.name, employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.id, role.title, role.salary, role.department_id FROM department JOIN role ON department.id = role.department_id JOIN employee ON role.id = employee.role_id";
-
   connection.query(departments, (err, results) => {
     if (err) console.error(err);
     //console.log(results);
@@ -77,7 +76,8 @@ function viewDepartments() {
 
 // View roles
 function viewRoles() {
-  let roles = "Select role.id, role.title, role.salary, role.department_id, employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, department.id, department.name FROM department JOIN role ON department.id = role.department_id JOIN employee ON role.id = employee.role_id";
+  let roles =
+    "Select role.id, role.title, role.salary, role.department_id, employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, department.id, department.name FROM department JOIN role ON department.id = role.department_id JOIN employee ON role.id = employee.role_id";
   connection.query(roles, (err, results) => {
     if (err) console.error(err);
     //console.log(results);
@@ -89,7 +89,9 @@ function viewRoles() {
 
 // View Employees
 function viewEmployees() {
-  connection.query("select * from employee", (err, results) => {
+  let employees =
+    "Select employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.id, role.title, role.salary, role.department_id, department.id, department.name FROM department JOIN role ON department.id = role.department_id JOIN employee ON role.id = employee.role_id";
+  connection.query(employees, (err, results) => {
     if (err) console.error(err);
     //console.log(results);
     console.table(results);

@@ -30,3 +30,9 @@ FROM department
 JOIN role ON department.id = role.department_id 
 JOIN employee ON role.id = employee.role_id;
 
+-- View table by employee
+Select employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.id, role.title, role.salary, role.department_id, department.id, department.name
+FROM department 
+JOIN role ON department.id = role.department_id 
+JOIN employee ON role.id = employee.role_id;
+
