@@ -28,22 +28,14 @@ CREATE TABLE employee (
 id int not null auto_increment PRIMARY KEY,
 first_name varchar(30) not null,
 last_name varchar(30) not null,
-role_id int not null,
+role_id int,
 manager_id int,
 
-FOREIGN KEY (role_id) REFERENCES role(id),
-FOREIGN KEY (manager_id) REFERENCES employee(id)
+FOREIGN KEY (role_id) REFERENCES role(id)
 
+-- This FK should refenence to a NEW (newly created) employee id 
+-- FOREIGN KEY (manager_id) REFERENCES employee(id)
 );
-
-Insert into department (name)
-Values ("Echo"), ("EKG"), ("Holter");
-
-Insert into role (title, salary, department_id)
-Value ("Sonographer", 70000, 1);
-
-select * from department;
-select * from role;
 
 
 

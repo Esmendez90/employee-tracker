@@ -12,7 +12,12 @@ const connection = mysql.createConnection({
 });
 
 connection.connect((err) => {
-  err ? console.error(err) : askFirstQuestion();
+  if (err) {
+    console.error("error");
+    connection.end();
+  } else {
+    askFirstQuestion();
+  }
 });
 
 function askFirstQuestion() {
@@ -59,21 +64,32 @@ function askFirstQuestion() {
 // View departments
 function viewDepartments() {
   connection.query("select * from department", (err, results) => {
-    if(err) console.error(err);
+    if (err) console.error(err);
     //console.log(results);
     console.table(results);
-    console.log("See results above")
+    console.log("See results above");
     askFirstQuestion();
   });
 }
 
 // View roles
 function viewRoles() {
-  console.log("roles friend")
+  connection.query("select * from role", (err, results) => {
+    if (err) console.error(err);
+    //console.log(results);
+    console.table(results);
+    console.log("See results above");
+    askFirstQuestion();
+  });
 }
 
 // View Employees
 function viewEmployees() {
-  console.log("employees here")
+  connection.query("select * from employee", (err, results) => {
+    if (err) console.error(err);
+    //console.log(results);
+    console.table(results);
+    console.log("See results above");
+    askFirstQuestion();
+  });
 }
-
