@@ -13,9 +13,9 @@ select * from department;
 select * from role;
 select * from employee;
 
-Select * from department a 
-JOIN role b
-ON (a.id = b.department_id);
+-- Select * from department a 
+-- JOIN role b
+-- ON (a.id = b.department_id);
 
 -- View table by departments
 Select department.id, department.name, employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id,
@@ -35,4 +35,7 @@ Select employee.id, employee.first_name, employee.last_name, employee.role_id, e
 FROM department 
 JOIN role ON department.id = role.department_id 
 JOIN employee ON role.id = employee.role_id;
+
+-- Add department
+Insert into department SET name= "Holter";
 

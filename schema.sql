@@ -16,7 +16,7 @@ name varchar(30)
 -- Role table
 CREATE TABLE role (
 id int not null auto_increment PRIMARY KEY,
-title varchar(30) not null,
+title varchar(30),
 salary decimal,
 department_id int,
 
@@ -26,8 +26,8 @@ FOREIGN KEY (department_id) REFERENCES department(id)
 -- Employee table
 CREATE TABLE employee (
 id int not null auto_increment PRIMARY KEY,
-first_name varchar(30) not null,
-last_name varchar(30) not null,
+first_name varchar(30),
+last_name varchar(30),
 role_id int,
 manager_id int,
 
