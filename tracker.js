@@ -166,6 +166,7 @@ function addEmployee() {
     insertEmployee(results);
   });
 }
+
 function insertEmployee(roleData) {
   allRoles = roleData.map((role) => {
     return { name: role.title, value: role.id };
@@ -256,71 +257,64 @@ function viewEmployees() {
   });
 }
 
-// Update employee role
-// function updateEmployeeRole() {
-//   let employees = "SELECT * FROM employee";
-//   connection.query(employees, (err, results) => {
-//     if (err) console.error(err);
-//     update(results);
-//   });
-//   let roles = "SELECT * FROM role";
-//   connection.query(roles, (err, results) => {
-//     if (err) console.error(err);
-//     //console.log(results);
-
-//   });
-// }
-
 function updateEmployeeRole() {
-  let employees = "SELECT * FROM employee";
-  connection.query(employees, (err, employeesData) => {
+  connection.query("SELECT * FROM employee", (err, results) => {
     if (err) console.error(err);
-    console.log(employeesData);
-    allEmployees = employeesData.map((employee) => {
+    allEmployees = results.map((data) => {
       return {
-        name: employee.first_name + " " + employee.last_name,
-        value: { ...employee },
+        name: data.first_name + " " + data.last_name,
+        value: { ...data },
       };
     });
-    
-  });
 
-  let roles = "SELECT * FROM role";
-  connection.query(roles, (err, roleData) => {
-    if (err) console.error(err);
-    console.log(roleData);
-    allRoles = roleData.map((role) => {
-      return { name: role.title, value: role.id };
-    });
-    
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          message: "Which employee are you updating?",
+          name: "chosen",
+          choices: allEmployees,
+        },
+      ])
+      .then((answers) => {
+        let chosen = answers.chosen;
+        console.log(answers.chosen);
+        updateRole(chosen);
+      });
   });
-
-  inquirer.prompt([
-    {
-      type: "list",
-      message: "What employee are you updating?",
-      name: "chosen",
-      choices: allEmployees,
-    },
-    {
-      type: "list",
-      message: "What is the new role for this employee?",
-      name: "role",
-      choices: allRoles,
-    },
-  ]). then ((answers) => {
-    let { chosen, role } = answers;
-    role = parseInt(role);
-    updateRole(chosen, role);
-  })
 }
 
-function updateRole(chosen, role) {
-  const setValue = { roles_id: role };
-  const whereValue = { id: chosen.id };
-  connection.query("UPDATE employee SET ? WHERE ?", [setValue, whereValue], (err) => {
-    if(err) console.error(err);
-    console.log("Employee role has been updated.");
-    askFirstQuestion();
+function updateRole(chosen) {
+  connection.query("SELECT * FROM role", (err, results) => {
+    if (err) console.error(err);
+    allRoles = results.map((data) => {
+      return { name: data.title, value: data.id };
+    });
+    console.log(allRoles);
+
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          message: "What is this employee's new role?",
+          name: "role",
+          choices: allRoles,
+        },
+      ])
+      .then((answers) => {
+        let { role } = answers;
+        role = parseInt(role);
+        const setValue = { role_id: role };
+        const whereValue = { id: chosen.id };
+        connection.query(
+          "UPDATE employee SET ? WHERE ?",
+          [setValue, whereValue],
+          (err) => {
+            if (err) console.error(err);
+            console.log("Employee has been updated.");
+            askFirstQuestion();
+          }
+        );
+      });
   });
 }
