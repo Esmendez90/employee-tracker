@@ -84,7 +84,7 @@ function addDepartment() {
     ])
     .then((answer) => {
       console.log("Below is the department that will be created");
-      console.log(answer);
+      //console.log(answer);
       insertDepatment(answer);
     });
 }
@@ -92,8 +92,8 @@ function addDepartment() {
 function insertDepatment(data) {
   connection.query("INSERT INTO department SET ?", data, (err) => {
     if (err) return console.error(err);
-    console.log("passed in value");
-    console.log(data);
+    //console.log("passed in value");
+    //console.log(data);
     console.log("New department has been added to database.");
     askFirstQuestion();
   });
@@ -104,7 +104,7 @@ function addRole() {
   let departments = "SELECT * FROM department";
   connection.query(departments, (err, results) => {
     if (err) console.error(err);
-    console.log(results);
+    //console.log(results);
     newrole(results);
   });
 }
@@ -150,7 +150,7 @@ function newrole(departmentData) {
     .then((data) => {
       connection.query("INSERT INTO role SET ?", data, (err) => {
         if (err) return console.error(err);
-        console.log(data);
+        //console.log(data);
         console.log("New role has been added to database.");
         askFirstQuestion();
       });
@@ -162,7 +162,7 @@ function addEmployee() {
   let roles = "SELECT * FROM role";
   connection.query(roles, (err, results) => {
     if (err) console.error(err);
-    console.log(results);
+    //console.log(results);
     insertEmployee(results);
   });
 }
@@ -207,8 +207,8 @@ function insertEmployee(roleData) {
     .then((data) => {
       connection.query("INSERT INTO employee SET ?", data, (err) => {
         if (err) return console.error(err);
-        console.log("passed in value");
-        console.log(data);
+        //console.log("passed in value");
+        //console.log(data);
         console.log("New employee has been added to database.");
         askFirstQuestion();
       });
@@ -218,13 +218,13 @@ function insertEmployee(roleData) {
 // View departments
 function viewDepartments() {
   //let departments =
-  //  "Select department.id, department.name, employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.id, role.title, role.salary, role.department_id FROM department JOIN role ON department.id = role.department_id JOIN employee ON role.id = employee.role_id";
+   // "Select department.id, department.name, employee.id, employee.first_name, employee.last_name, employee.role_id, employee.manager_id, role.id, role.title, role.salary, role.department_id FROM department JOIN role ON department.id = role.department_id JOIN employee ON role.id = employee.role_id";
   let departments = "SELECT * FROM department";
   connection.query(departments, (err, results) => {
     if (err) console.error(err);
     //console.log(results);
     console.table(results);
-    console.log("See results above");
+    console.log("SEE RESULTS ABOVE");
     askFirstQuestion();
   });
 }
@@ -238,7 +238,7 @@ function viewRoles() {
     if (err) console.error(err);
     //console.log(results);
     console.table(results);
-    console.log("See results above");
+    console.log("SEE RESULTS ABOVE");
     askFirstQuestion();
   });
 }
@@ -252,11 +252,12 @@ function viewEmployees() {
     if (err) console.error(err);
     //console.log(results);
     console.table(results);
-    console.log("See results above");
+    console.log("SEE RESULTS ABOVE");
     askFirstQuestion();
   });
 }
 
+// Update employee role
 function updateEmployeeRole() {
   connection.query("SELECT * FROM employee", (err, results) => {
     if (err) console.error(err);
@@ -278,7 +279,7 @@ function updateEmployeeRole() {
       ])
       .then((answers) => {
         let chosen = answers.chosen;
-        console.log(answers.chosen);
+        //console.log(answers.chosen);
         updateRole(chosen);
       });
   });
@@ -290,7 +291,7 @@ function updateRole(chosen) {
     allRoles = results.map((data) => {
       return { name: data.title, value: data.id };
     });
-    console.log(allRoles);
+    //console.log(allRoles);
 
     inquirer
       .prompt([
